@@ -28,6 +28,10 @@ import Time from './Time';
 import GiftedAvatar from './GiftedAvatar';
 import GiftedChatInteractionManager from './GiftedChatInteractionManager';
 
+//RNChat edit
+import { Map } from 'immutable';
+const messagesMap = new Map();
+
 // Min and max heights of ToolbarInput and Composer
 // Needed for Composer auto grow and ScrollView animation
 // TODO move these values to Constants.js (also with used colors #b2b2b2)
@@ -79,11 +83,15 @@ class GiftedChat extends React.Component {
     };
   }
 
-  static append(currentMessages = [], messages) {
+ static append(currentMessages = [], messages) {
     if (!Array.isArray(messages)) {
       messages = [messages];
     }
-    return messages.concat(currentMessages);
+
+    messages.forEach((message) => {
+      messagesMap = messagesMap.set(message._id, message);
+    });
+    return messagesMap.sortBy(msg => msg.createdAt).reverse().toArray();
   }
 
   static prepend(currentMessages = [], messages) {

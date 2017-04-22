@@ -1,3 +1,25 @@
+##My work
+Adding support for editing message inside Giftedchat
+Actually there is no editing but replacing a message with the same key
+I needed this because of my project [RNChat](https://github.com/Blacktoviche/RNChat) there is a progress message needed update (replace)
+here is my code in Giftedchat.js
+
+```js
+import { Map } from 'immutable';
+const messagesMap = new Map();
+
+  static append(currentMessages = [], messages) {
+    if (!Array.isArray(messages)) {
+      messages = [messages];
+    }
+
+    messages.forEach((message) => {
+      messagesMap = messagesMap.set(message._id, message);
+    });
+    return messagesMap.sortBy(msg => msg.createdAt).reverse().toArray();
+  }
+```
+
 # Gifted Chat
 The most complete chat UI for React Native (formerly known as Gifted Messenger)
 
